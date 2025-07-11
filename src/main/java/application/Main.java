@@ -18,11 +18,17 @@ public class Main {
         System.out.println("\n________Test 2: seller findByDepartment________");
         Department dpt = new Department(4, null);
         List<Seller> list = slrDao.findByDepartment(dpt);
-        
-        if (list != null) {
-            list.forEach(System.out::println);
-        } else {
-            System.out.println("Nenhum vendedor encontrado para este departamento");
-        }
+
+        List<Seller> finalList = list;
+        list.stream()
+                .findAny()
+                .ifPresentOrElse(
+                        any -> finalList.forEach(System.out::println),
+                        () -> System.out.println("Nenhum vendedor encontrado para este departamento")
+                );
+
+        System.out.println("\n________Test 3: seller findByAll________");
+        list = slrDao.findAll();
+        list.forEach(System.out::println);
     }
 }
