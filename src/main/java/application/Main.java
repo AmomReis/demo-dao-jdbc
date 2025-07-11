@@ -12,8 +12,8 @@ public class Main {
 
         SellerDao slrDao = DaoFactory.createSellerDao();
 
+        System.out.println("\n________Test 1: seller findById________");
         Seller slr = slrDao.findById(3);
-
         System.out.println(slr);
     }
 }
