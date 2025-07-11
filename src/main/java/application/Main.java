@@ -5,6 +5,7 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
+import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -24,11 +25,16 @@ public class Main {
                 .findAny()
                 .ifPresentOrElse(
                         any -> finalList.forEach(System.out::println),
-                        () -> System.out.println("Nenhum vendedor encontrado para este departamento")
+                        () -> System.out.println("No sellers found for this department...")
                 );
 
         System.out.println("\n________Test 3: seller findByAll________");
         list = slrDao.findAll();
         list.forEach(System.out::println);
+
+        System.out.println("\n________Test 4: seller insert________");
+        Seller newSeller = new Seller(null, "Greg", "greg@gmail.com", new Date(), 4000.0, dpt);
+        slrDao.insert(newSeller);
+        System.out.println("Inserted! New id = " + newSeller.getId());
     }
 }
