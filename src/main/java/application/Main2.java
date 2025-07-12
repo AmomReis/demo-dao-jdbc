@@ -4,6 +4,7 @@ import model.dao.DaoFactory;
 import model.dao.DepartmentDao;
 import model.entities.Department;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main2 {
@@ -30,5 +31,9 @@ public class Main2 {
         int id = sc.nextInt();
         dptDao.deleteById(id);
         System.out.println("Delete completed");
+
+        System.out.println("\n________Test 5: department findByAll________");
+        List<Department> list = dptDao.findAll();
+        list.forEach(System.out::println);
     }
 }

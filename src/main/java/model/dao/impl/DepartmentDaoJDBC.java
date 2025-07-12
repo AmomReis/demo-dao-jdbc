@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentDaoJDBC implements DepartmentDao {
@@ -27,11 +28,11 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         try {
             st = conn.prepareStatement(
                     """
-                        INSERT INTO department
-                            (Name)
-                        values 
-                            (?)
-                        """,
+                            INSERT INTO department
+                                (Name)
+                            values 
+                                (?)
+                            """,
                     PreparedStatement.RETURN_GENERATED_KEYS
             );
 
@@ -64,10 +65,10 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         try {
             st = conn.prepareStatement(
                     """
-                        UPDATE department
-                        set Name = ?
-                        where Id = ?
-                        """
+                            UPDATE department
+                            set Name = ?
+                            where Id = ?
+                            """
             );
 
             st.setString(1, obj.getName());
@@ -91,8 +92,8 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         try {
             st = conn.prepareStatement(
                     """
-                        delete from department where Id = ?
-                        """
+                            delete from department where Id = ?
+                            """
             );
 
             st.setInt(1, id);
@@ -112,10 +113,10 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         try {
             st = conn.prepareStatement(
                     """
-                        SELECT department.*
-                        FROM department
-                        WHERE Id = ?
-                        """
+                            SELECT department.*
+                            FROM department
+                            WHERE Id = ?
+                            """
             );
 
             st.setInt(1, id);
@@ -127,6 +128,9 @@ public class DepartmentDaoJDBC implements DepartmentDao {
             return null;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
 
     }
