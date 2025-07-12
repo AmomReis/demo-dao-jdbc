@@ -53,7 +53,7 @@ public class SellerDaoJDBC implements SellerDao {
                     int id = rs.getInt(1);
                     obj.setId(id);
                 } else {
-                    throw new DbException("Unexpected error! No rows affecteds.");
+                    throw new DbException("Unexpected error! No rows affected.");
                 }
             }
         } catch (SQLException e) {
@@ -67,7 +67,6 @@ public class SellerDaoJDBC implements SellerDao {
     @Override
     public void update(Seller obj) {
         PreparedStatement st = null;
-        ResultSet rs = null;
         try {
             st = conn.prepareStatement(
                     """

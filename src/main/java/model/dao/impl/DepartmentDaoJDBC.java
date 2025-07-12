@@ -46,7 +46,7 @@ public class DepartmentDaoJDBC implements DepartmentDao {
                     int id = rs.getInt(1);
                     obj.setId(id);
                 } else {
-                    throw new DbException("Unexpected error! No rows affecteds.");
+                    throw new DbException("Unexpected error! No rows affected.");
                 }
             }
 
@@ -61,7 +61,6 @@ public class DepartmentDaoJDBC implements DepartmentDao {
     @Override
     public void update(Department obj) {
         PreparedStatement st = null;
-        ResultSet rs = null;
         try {
             st = conn.prepareStatement(
                     """
