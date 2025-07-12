@@ -36,5 +36,11 @@ public class Main {
         Seller newSeller = new Seller(null, "Greg", "greg@gmail.com", new Date(), 4000.0, dpt);
         slrDao.insert(newSeller);
         System.out.println("Inserted! New id = " + newSeller.getId());
+
+        System.out.println("\n________Test 5: seller update________");
+        slr = slrDao.findById(1);
+        slr.setName("Marie Curie");
+        slrDao.update(slr);
+        System.out.println("Update completed");
     }
 }
