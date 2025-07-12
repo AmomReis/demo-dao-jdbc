@@ -27,16 +27,15 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         try {
             st = conn.prepareStatement(
                     """
-                            INSERT INTO department
-                                (Id, Name)
-                            values 
-                                (?, ?)
-                            """,
+                        INSERT INTO department
+                            (Name)
+                        values 
+                            (?)
+                        """,
                     PreparedStatement.RETURN_GENERATED_KEYS
             );
 
-            st.setInt(1, obj.getId());
-            st.setString(2, obj.getName());
+            st.setString(1, obj.getName());
 
             int rowsAffected = st.executeUpdate();
 
@@ -66,7 +65,7 @@ public class DepartmentDaoJDBC implements DepartmentDao {
             st = conn.prepareStatement(
                     """
                         UPDATE department
-                        set Name ?
+                        set Name = ?
                         where Id = ?
                         """
             );
@@ -108,7 +107,35 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public Department findById(Integer id) {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    """
+                        SELECT department.*
+                        FROM department
+                        WHERE Id = ?
+                        """
+            );
+
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                return instantiateDepartment(rs);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+
+    }
+
+    private Department instantiateDepartment(ResultSet rs) throws SQLException {
+        Department dep = new Department();
+        dep.setId(rs.getInt("Id"));
+        dep.setName(rs.getString("Name"));
+        return dep;
     }
 
     @Override
