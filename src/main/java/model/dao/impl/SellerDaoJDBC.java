@@ -85,7 +85,13 @@ public class SellerDaoJDBC implements SellerDao {
             st.setInt(5, obj.getDepartment().getId());
             st.setInt(6, obj.getId());
 
-            st.executeUpdate();
+            int rowsAffected = st.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Update completed. Number of lines affected: " + rowsAffected);
+            } else {
+                throw new DbException("No lines affected.");
+            }
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
