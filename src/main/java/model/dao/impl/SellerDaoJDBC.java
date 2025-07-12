@@ -107,7 +107,11 @@ public class SellerDaoJDBC implements SellerDao {
 
             st.setInt(1, id);
 
-            st.executeUpdate();
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DbException("No seller found with the given ID: " + id);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

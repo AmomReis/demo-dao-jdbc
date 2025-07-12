@@ -98,7 +98,11 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
             st.setInt(1, id);
 
-            st.executeUpdate();
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DbException("No department found with the given ID: " + id);
+            }
+
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
